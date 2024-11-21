@@ -1,16 +1,17 @@
-import { View, Text } from 'react-native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import React from 'react'
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Home from '../screens/Home';
+import Profile from '../screens/Profile';
+
+const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
-
-    const Tab = createBottomTabNavigator();
-
   return (
-    <NavigationContainer>
-        <Tab.Screen></Tab.Screen>
-    </NavigationContainer>
-  )
-}
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Profile" component={Profile} />
+    </Tab.Navigator>
+  );
+};
 
-export default TabNavigation
+export default TabNavigation;

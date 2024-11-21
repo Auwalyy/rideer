@@ -3,24 +3,15 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';  
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login, Signup, Welcome } from './screens/index.js';
+import TabNavigation from './Navigation/TabNavigation.js';
 
 const App = () => {
-
+   
   const Stack = createNativeStackNavigator();
-
+  
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Welcome' screenOptions={{
-        headerShown: false,
-      }}>
-          <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name='Signup' component={Signup} />
-      </Stack.Navigator>
+        <TabNavigation />
     </NavigationContainer>
   )
 }
