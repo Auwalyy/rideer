@@ -1,13 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import Mapper from './Mapper'
 
-const Home = () => {
+const Completed = () => {
   return (
     <View>
-      <Mapper />
+      <Text>Completed</Text>
     </View>
   )
 }
 
-export default Home;
+export default Completed

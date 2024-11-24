@@ -1,13 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import Mapper from './Mapper'
 
-const Home = () => {
+const Cancel = () => {
   return (
     <View>
-      <Mapper />
+      <Text>Cancel</Text>
     </View>
   )
 }
 
-export default Home;
+export default Cancel

@@ -26,7 +26,11 @@ const Signup = ({ route, navigation }) => {
     setPassword('');
     setBusinessName('');
     setBusinessAddress('');
+
     alert(`${userType === 'vendor' ? 'Vendor' : 'Individual'} account created successfully!`);
+    
+    // Navigate to TabNavigation after successful signup
+    navigation.navigate('TabNavigation'); // Ensure 'TabNavigation' is the correct route name
   };
 
   return (
