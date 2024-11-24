@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, TextInput, Button, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const { width } = Dimensions.get('window');
 
@@ -21,16 +30,23 @@ const Signup = ({ route, navigation }) => {
       alert('Please provide your business details');
       return;
     }
+
+    // Reset form fields after signup
     setName('');
     setEmail('');
     setPassword('');
     setBusinessName('');
     setBusinessAddress('');
 
+    // Alert user of successful signup
     alert(`${userType === 'vendor' ? 'Vendor' : 'Individual'} account created successfully!`);
-    
-    // Navigate to TabNavigation after successful signup
-    navigation.navigate('TabNavigation'); // Ensure 'TabNavigation' is the correct route name
+
+    // Navigate to appropriate tab or screen based on user type
+    if (userType === 'vendor') {
+      navigation.navigate('TabNav');   
+    } else {
+      navigation.navigate('TabNavigation'); 
+    }
   };
 
   return (
@@ -102,8 +118,7 @@ const Signup = ({ route, navigation }) => {
           onPress={() => navigation.navigate('Login')} // Ensure 'Login' is a valid route
         >
           <Text style={styles.redirectText}>
-            Already have an account?
-            <Icon name="arrow-forward" size={16} color="#000B58" />
+            Already have an account? <Icon name="arrow-forward" size={16} color="#000B58" />
           </Text>
         </TouchableOpacity>
       </View>

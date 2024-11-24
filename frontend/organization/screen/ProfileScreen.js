@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Completed = () => {
+const ProfileScreen = () => {
   return (
     <View>
-      <Text>Completed</Text>
+      <Text>ProfileScreen</Text>
     </View>
   )
 }
 
-export default Completed
+export default ProfileScreen

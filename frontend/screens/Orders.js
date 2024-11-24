@@ -80,7 +80,7 @@ export default Orders;
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
+        padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#ddd'
     }

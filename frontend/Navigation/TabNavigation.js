@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import Orders from '../screens/Orders';
-import Icon from 'react-native-vector-icons/Ionicons'; // You can use other icon sets like FontAwesome
+import Icon from 'react-native-vector-icons/Ionicons'; 
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +15,7 @@ const TabNavigation = () => {
         component={Home} 
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="home" size={size} color={color} /> // Add the icon for Home
+            <Icon name="home" size={size} color={color} /> 
           ),
         }}
       />
@@ -25,7 +25,7 @@ const TabNavigation = () => {
         component={Orders} 
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="cart" size={size} color={color} /> // Add the icon for Orders
+            <Icon name="cart" size={size} color={color} /> 
           ),
         }}
       />
@@ -34,7 +34,7 @@ const TabNavigation = () => {
         component={Profile} 
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="person" size={size} color={color} /> // Add the icon for Profile
+            <Icon name="person" size={size} color={color} /> 
           ),
         }}
       />

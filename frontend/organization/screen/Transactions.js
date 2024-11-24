@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Pending = () => {
+const Transactions = () => {
   return (
     <View>
-      <Text>Pending</Text>
+      <Text>Transactions</Text>
     </View>
   )
 }
 
-export default Pending
+export default Transactions

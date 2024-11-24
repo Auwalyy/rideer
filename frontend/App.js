@@ -6,6 +6,7 @@ import Welcome from './screens/Welcome';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
 import TabNavigation from './Navigation/TabNavigation';
+import TabNav from './organization/Bottom/TabNav';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="TabNavigation" component={TabNavigation} />
+        <Stack.Screen name="TabNav" component={TabNav} />
       </Stack.Navigator>
     </NavigationContainer>
   );
