@@ -1,14 +1,13 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
-import HomeScreen from '../screen/HomeScreen';
-import Riders from '../screen/Riders';
-import Transactions from '../screen/Transactions';
-import ProfileScreen from '../screen/ProfileScreen';
- 
-const TabNav = () => {
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/Ionicons";
+import HomeScreen from "../screen/HomeScreen";
+import Riders from "../screen/Riders";
+import Transactions from "../screen/Transactions";
+import ProfileScreen from "../screen/ProfileScreen";
 
- const Tab = createBottomTabNavigator();
+const TabNav = () => {
+  const Tab = createBottomTabNavigator();
 
   return (
     <Tab.Navigator>
@@ -28,6 +27,7 @@ const TabNav = () => {
           tabBarIcon: ({ color, size }) => (
             <Icon name="bicycle" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
