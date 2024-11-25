@@ -1,6 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, SafeAreaView, Button, Pressable, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Button,
+  Pressable,
+  StyleSheet,
+  Modal,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
 const Welcome = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -8,34 +17,39 @@ const Welcome = ({ navigation }) => {
   // Handler for user selection
   const handleUserSelection = (type) => {
     setModalVisible(false); // Automatically close the modal
-    navigation.navigate('Signup', { userType: type });
+    navigation.navigate("Signup", { userType: type });
   };
+
+  function handleLogin() {}
+  function handleSignup() {}
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.heading}>Riderr</Text>
-        <Text style={styles.description}>
-          Experience instant delivery services right at your doorstep. Get started now!
+      <View style={styles.logo}>
+        <Image source={require("../assets/logo.png")} style={styles.image} />
+      </View>
+      <View>
+        <Text style={styles.title}>Riderr</Text>
+        <Text style={styles.subTitle}>
+          Delivering Convenience one ride at a time
         </Text>
       </View>
 
-      <View style={styles.getStartedSection}>
-        <Text style={styles.title}>Let's Get Started</Text>
-        <Text style={styles.subTitle}>Explore the app today and enjoy seamless delivery services</Text>
-
-        {/* Join Now Button */}
-        <TouchableOpacity style={styles.joinButton} onPress={() => setModalVisible(true)}>
-          <Text style={styles.joinButtonText}>Join Now</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.loginButtonWrapper]}>
+          <Text
+            onPress={() => navigation.navigate("Login")}
+            style={styles.signupButtonText}
+          >
+            Login
+          </Text>
         </TouchableOpacity>
-
-        {/* Login Option */}
-        <View style={styles.loginSection}>
-          <Text style={styles.loginText}>Already have an account?</Text>
-          <Pressable onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.loginButton}> Login</Text>
-          </Pressable>
-        </View>
+        <TouchableOpacity
+          style={[styles.loginButtonWrapper, { backgroundColor: "white" }]}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.loginButtonText}>Signup</Text>
+        </TouchableOpacity>
       </View>
 
       {/* Signup Options Modal */}
@@ -51,16 +65,16 @@ const Welcome = ({ navigation }) => {
 
             <TouchableOpacity
               style={styles.optionButton}
-              onPress={() => handleUserSelection('vendor')}
+              onPress={() => handleUserSelection("individual")}
             >
-              <Text style={styles.optionText}>Signup as Vendor</Text>
+              <Text style={styles.optionText}>Individual</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.optionButton}
-              onPress={() => handleUserSelection('individual')}
+              onPress={() => handleUserSelection("vendor")}
             >
-              <Text style={styles.optionText}>Signup as Individual</Text>
+              <Text style={styles.optionText}>Organization</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -81,122 +95,111 @@ export default Welcome;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000B58',
-    paddingHorizontal: 20,
-    justifyContent: 'center',
+    // padding: 40,
+    alignContent: "center",
   },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  logo: {
+    paddingTop: 50,
+    marginVertical: 30,
+    margin: "auto",
+    borderRadius: 50,
   },
-  heading: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#ffffff',
-    marginBottom: 10,
+  image: {
+    marginVertical: 20,
+    height: 250,
+    width: 231,
+    borderRadius: 50,
   },
-  description: {
-    fontSize: 16,
-    color: '#ffffff',
-    textAlign: 'center',
-    paddingHorizontal: 20,
-    marginTop: 10,
-  },
-  getStartedSection: {
-    alignItems: 'center',
-    marginBottom: 40,
-  },
+
   title: {
-    fontSize: 28,
-    fontWeight: '600',
-    color: '#ffffff',
-    textAlign: 'center',
-    marginBottom: 10,
+    fontSize: 40,
+    paddingHorizontal: 20,
+    textAlign: "center",
+    marginTop: 40,
   },
   subTitle: {
     fontSize: 18,
-    color: '#ffffff',
-    textAlign: 'center',
-    marginBottom: 20,
+    paddingHorizontal: 20,
+    textAlign: "center",
+    marginVertical: 20,
   },
-  joinButton: {
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    alignItems: 'center',
-    marginVertical: 10,
-    elevation: 3,
-  },
-  joinButtonText: {
-    color: '#000B58',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  loginSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
+
+  buttonContainer: {
+    margin: "auto",
     marginTop: 20,
+    flexDirection: "row",
+    borderWidth: 2,
+    width: "80%",
+    height: 60,
+    borderRadius: 100,
+    backgroundColor: "white",
+    borderColor: "white",
   },
-  loginText: {
-    fontSize: 16,
-    color: '#ffffff',
+  loginButtonWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "50%",
+    borderRadius: 98,
+    backgroundColor: "#6753fc",
+    borderColor: "blue",
   },
-  loginButton: {
-    fontSize: 16,
-    color: '#ffffff',
-    fontWeight: '600',
-    marginLeft: 5,
+  loginButtonText: {
+    fontSize: 18,
+    color: "#6753fc",
   },
+  signupButtonText: {
+    fontSize: 18,
+    color: "white",
+  },
+
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    width: '80%',
+    width: "80%",
     padding: 20,
-    backgroundColor: '#ffffff',
+    backgroundColor: "white",
     borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
     elevation: 5,
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: '600',
-    color: '#000B58',
+    fontWeight: "600",
+    color: "#6753fc",
     marginBottom: 20,
   },
   optionButton: {
-    width: '100%',
+    width: "100%",
     paddingVertical: 15,
-    backgroundColor: '#000B58',
+    backgroundColor: "#6753fc",
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 15,
   },
   optionText: {
-    color: '#ffffff',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   closeButton: {
     marginTop: 10,
-    backgroundColor: '#ffffff',
+    backgroundColor: "white",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#000B58',
+    borderColor: "#6753fc",
   },
   closeButtonText: {
-    color: '#000B58',
+    color: "#000B58",
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });
