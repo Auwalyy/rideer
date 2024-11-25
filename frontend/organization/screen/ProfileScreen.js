@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#000B58",
+    color: "#6753fc",
   },
   profilePictureContainer: {
     alignItems: "center",
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   editButton: {
-    backgroundColor: "#000B58",
+    backgroundColor: "#6753fc",
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: "center",
@@ -183,16 +183,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#000B58",
+    color: "#6753fc",
   },
   modalOption: {
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#e9ecef",
+    borderBottomColor: "#6753fc",
   },
   modalOptionText: {
     fontSize: 16,
-    color: "#000",
+    color: "#6753fc",
   },
   closeModalButton: {
     marginTop: 20,

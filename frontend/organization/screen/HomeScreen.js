@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 26,
     fontWeight: "bold",
-    color: "#000B58",
+    color: "#6753fc",
     marginBottom: 20,
     textAlign: "center",
   },
@@ -89,16 +89,16 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#000B58",
+    color: "#6753fc",
     marginBottom: 10,
   },
   cardValue: {
     fontSize: 16,
-    color: "#6c757d",
+    color: "#6753fc",
     marginBottom: 15,
   },
   cardButton: {
-    backgroundColor: "#000B58",
+    backgroundColor: "#6753fc",
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 15,
