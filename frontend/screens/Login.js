@@ -1,191 +1,143 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
-  SafeAreaView,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const { width } = Dimensions.get("window");
-
-const Signup = ({ route, navigation }) => {
-  const { userType } = route.params || { userType: "individual" }; // Default to 'individual' if not specified
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [businessName, setBusinessName] = useState("");
-  const [businessAddress, setBusinessAddress] = useState("");
-
-  const handleSubmit = () => {
-    if (!name || !email || !password) {
-      alert("Please fill out all fields");
-      return;
-    }
-    if (userType === "vendor" && (!businessName || !businessAddress)) {
-      alert("Please provide your business details");
-      return;
-    }
-    setName("");
-    setEmail("");
-    setPassword("");
-    setBusinessName("");
-    setBusinessAddress("");
-    alert(
-      `${
-        userType === "vendor" ? "Vendor" : "Individual"
-      } account created successfully!`
-    );
-  };
+const Login = ({ navigation }) => {
+  const Stack = createNativeStackNavigator();
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.form}>
-        <Text style={styles.title}>Lets get Started</Text>
+    <View style={styles.container}>
+      <View style={styles.helloContainer}>
+        <Text style={styles.signInText}>Hey, Welcome Back</Text>
+      </View>
 
-        <View style={styles.inputContainer}>
-          <Icon name="person" size={20} color="#6753fc" style={styles.icon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Name"
-            value={name}
-            onChangeText={(text) => setName(text)}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Icon name="email" size={20} color="#6753fc" style={styles.icon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Icon name="lock" size={20} color="#6753fc" style={styles.icon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
-
-        {userType === "vendor" && (
-          <>
-            <View style={styles.inputContainer}>
-              <Icon
-                name="store"
-                size={20}
-                color="#6753fc"
-                style={styles.icon}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Business Name"
-                value={businessName}
-                onChangeText={(text) => setBusinessName(text)}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Icon
-                name="location-on"
-                size={20}
-                color="#6753fc"
-                style={styles.icon}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Business Address"
-                value={businessAddress}
-                onChangeText={(text) => setBusinessAddress(text)}
-              />
-            </View>
-          </>
-        )}
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={handleSubmit}
+      <View style={styles.inputContainer}>
+        <FontAwesome
+          name="user"
+          size={20}
           color="#6753fc"
-        >
-          <Text style={styles.btnText}>Signup</Text>
-        </TouchableOpacity>
+          style={styles.inputIcon}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Email"
+          keyboardType="email-address"
+        />
+      </View>
 
-        <TouchableOpacity
-          style={styles.loginRedirect}
-          onPress={() => navigation.navigate("Login")} // Ensure 'Login' is a valid route
-        >
-          <Text style={styles.redirectText}>
-            Already have an account? Login
+      <View style={styles.inputContainer}>
+        <Fontisto
+          name="locked"
+          size={20}
+          color="#6753fc"
+          style={styles.inputIcon}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Password"
+          secureTextEntry
+        />
+      </View>
+
+      <TouchableOpacity>
+        <Text style={styles.forgotText}>Forgot your password?</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.signInButton}>
+        <Text style={styles.signInButtonText}>Login</Text>
+      </TouchableOpacity>
+
+      <View style={styles.signupRedirect}>
+        <Text style={styles.signupText}>Don't have an account?</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+          <Text style={styles.signupButtonText}>
+            Sign Up <FontAwesome name="arrow-right" size={14} color="#6753fc" />
           </Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
-export default Signup;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    backgroundColor: "#ffffff",
     paddingHorizontal: 20,
-    backgroundColor: "white",
+    justifyContent: "center",
   },
-  form: {
-    width: "100%",
+  helloContainer: {
+    marginBottom: 20,
   },
-  title: {
+
+  signInText: {
     textAlign: "center",
     fontSize: 18,
     color: "#6c757d",
-    marginBottom: 20,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    borderColor: "#6753fc",
     borderWidth: 1,
-    borderRadius: 50,
-    marginBottom: 15,
-    paddingHorizontal: 10,
+    borderColor: "#6753fc",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    height: 50,
+    backgroundColor: "#ffffff",
+    elevation: 2,
   },
-  icon: {
+  inputIcon: {
     marginRight: 10,
   },
-  input: {
+  textInput: {
     flex: 1,
-    height: 50,
     fontSize: 16,
   },
-  btn: {
-    borderRadius: 50,
+  forgotText: {
+    textAlign: "right",
+    color: "#6753fc",
+    fontSize: 14,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  signInButton: {
     backgroundColor: "#6753fc",
+    borderRadius: 10,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 10,
+    marginVertical: 20,
   },
-  btnText: {
-    color: "white",
+  signInButtonText: {
+    color: "#ffffff",
     fontSize: 18,
+    fontWeight: "600",
   },
-  loginRedirect: {
-    marginTop: 20,
+  signupRedirect: {
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
+    marginTop: 20,
   },
-  redirectText: {
+  signupText: {
+    fontSize: 14,
+    color: "#6c757d",
+  },
+  signupButtonText: {
+    fontSize: 14,
     color: "#6753fc",
-    fontSize: 16,
     fontWeight: "500",
+    marginLeft: 5,
   },
 });
