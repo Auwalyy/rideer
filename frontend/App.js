@@ -24,7 +24,13 @@ const App = () => {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="TabNav" component={TabNav} />
+        <Stack.Screen
+          name="TabNav"
+          component={TabNav}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
