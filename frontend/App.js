@@ -13,10 +13,22 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
-        <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Navigator initialRouteName="Welcome" opti>
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="TabNavigation"
           component={TabNavigation}
