@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: "600",
+    fontSize: 18,
+    fontWeight: "bold",
     color: "#6753fc",
     marginBottom: 20,
   },

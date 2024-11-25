@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Modal,
+  Dimensions,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const { width } = Dimensions.get("window");
 
 const Login = ({ navigation }) => {
-  const Stack = createNativeStackNavigator();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleNavigateSignup = (userType) => {
+    setModalVisible(false);
+    navigation.navigate("Signup", { userType });
+  };
 
   return (
     <View style={styles.container}>
@@ -57,12 +65,44 @@ const Login = ({ navigation }) => {
 
       <View style={styles.signupRedirect}>
         <Text style={styles.signupText}>Don't have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           <Text style={styles.signupButtonText}>
             Sign Up <FontAwesome name="arrow-right" size={14} color="#6753fc" />
           </Text>
         </TouchableOpacity>
       </View>
+
+      {/* Modal for account type selection */}
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Choose Account Type</Text>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => handleNavigateSignup("individual")}
+            >
+              <Text style={styles.modalButtonText}>Individual</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => handleNavigateSignup("vendor")}
+            >
+              <Text style={styles.modalButtonText}>Vendor</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.cancelButton]}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -79,7 +119,6 @@ const styles = StyleSheet.create({
   helloContainer: {
     marginBottom: 20,
   },
-
   signInText: {
     textAlign: "center",
     fontSize: 18,
@@ -139,5 +178,51 @@ const styles = StyleSheet.create({
     color: "#6753fc",
     fontWeight: "500",
     marginLeft: 5,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "80%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "#6753fc",
+  },
+  modalButton: {
+    backgroundColor: "#6753fc",
+    borderRadius: 10,
+    width: "100%",
+    paddingVertical: 15,
+    marginVertical: 10,
+    alignItems: "center",
+  },
+  modalButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  cancelButton: {
+    marginTop: 10,
+    backgroundColor: "white",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#6753fc",
+  },
+  closeButtonText: {
+    color: "#000B58",
+    fontSize: 14,
+    fontWeight: "600",
   },
 });
