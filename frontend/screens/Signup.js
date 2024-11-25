@@ -130,7 +130,8 @@ const Signup = ({ route, navigation }) => {
           onPress={() => navigation.navigate("Login")} // Ensure 'Login' is a valid route
         >
           <Text style={styles.redirectText}>
-            Already have an account? Login
+            Already have an account?
+            <Icon name="arrow-forward" size={16} color="#6753fc" />
           </Text>
         </TouchableOpacity>
       </View>
