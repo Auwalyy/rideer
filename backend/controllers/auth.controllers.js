@@ -2,7 +2,7 @@ const Individual = require('../models/individual');
 const Organization = require('../models/organization');
 const bcrypt = require('bcryptjs');
 const token = require('../utils/generateToken');
-const sendVerificationEmail = require('../mailtrap/email');
+const {sendVerificationEmail,sendWelcomeEmail} = require('../mailtrap/email');
 
 // organization signup, login and logout endpoints
 const signupOrg = async (req,res) => {
@@ -12,7 +12,7 @@ const signupOrg = async (req,res) => {
         if(!email || !password || !name){
             throw new Error("Alls fields are required");
         }
-        const userAlreadyExists = await Individual.findOne({email});
+        const userAlreadyExists = await Organization.findOne({email});
         console.log("userAlreadyExists", userAlreadyExists)
         if (userAlreadyExists) {
             return res.status(400).json({success:false, message: 'user already exists'});
@@ -50,6 +50,41 @@ const signupOrg = async (req,res) => {
     }
 
 };
+
+const verifyEmail = async (req,res) => {
+    const { code } = req.body;
+	try {
+		const orgUser = await Individual.findOne({
+			verificationToken: code,
+			verificationTokenExpiresAt: { $gt: Date.now() },
+		});
+
+		if (!orgUser) {
+			return res.status(400).json({ success: false, message: "Invalid or expired verification code" });
+		}
+
+		orgUser.isVerified = true;
+		orgUser.verificationToken = undefined;
+		orgUser.verificationTokenExpiresAt = undefined;
+		await orgUser.save();
+
+		await sendWelcomeEmail(orgUser.email, orgUser.name);
+
+		res.status(200).json({
+			success: true,
+			message: "Email verified successfully",
+			user: {
+				...orgUser._doc,
+				password: undefined,
+			},
+		});
+	} catch (error) {
+		console.log("error in verifyEmail ", error);
+		res.status(500).json({ success: false, message: "Server error" });
+	}
+};
+
+
 const loginOrg = async (req,res) => {
     res.send('login route')
 }
@@ -82,6 +117,7 @@ const logoutInd = async (req,res) => {
 
 module.exports = {
     signupOrg,
+    verifyEmail,
     loginOrg,
     logoutOrg,
     signupInd,
