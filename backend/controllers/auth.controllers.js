@@ -85,12 +85,41 @@ const verifyEmail = async (req,res) => {
 };
 
 
-const loginOrg = async (req,res) => {
-    res.send('login route')
-}
-const logoutOrg = async (req,res) => {
-    res.send('logout route')
-}
+const loginOrg = async (req, res) => {
+	const { email, password } = req.body;
+	try {
+		const user = await orgUser.findOne({ email });
+		if (!user) {
+			return res.status(400).json({ success: false, message: "Invalid credentials" });
+		}
+		const isPasswordValid = await bcrypt.compare(password, user.password);
+		if (!isPasswordValid) {
+			return res.status(400).json({ success: false, message: "Invalid credentials" });
+		}
+
+		generateTokenAndSetCookie(res, orgUser._id);
+
+		user.lastLogin = new Date();
+		await user.save();
+
+		res.status(200).json({
+			success: true,
+			message: "Logged in successfully",
+			user: {
+				...user._doc,
+				password: undefined,
+			},
+		});
+	} catch (error) {
+		console.log("Error in login ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+
+const logout = async (req, res) => {
+	res.clearCookie("token");
+	res.status(200).json({ success: true, message: "Logged out successfully" });
+};
 
 const signupInd = async (req,res) => {
     const {email, password, name} = req.body;
