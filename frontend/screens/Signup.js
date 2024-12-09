@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { signup } from "../Api";
 
 const { width } = Dimensions.get("window");
 
@@ -20,31 +21,46 @@ const Signup = ({ route, navigation }) => {
   const [password, setPassword] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [businessAddress, setBusinessAddress] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state to show spinner or button disable
 
-  const handleSubmit = () => {
+  const handleSignup = async () => {
+    // Preventing multiple form submissions
+    if (loading) return;
+
     if (!name || !email || !password) {
       alert("Please fill out all fields");
       return;
     }
+
     if (userType === "vendor" && (!businessName || !businessAddress)) {
       alert("Please provide your business details");
       return;
     }
-    setName("");
-    setEmail("");
-    setPassword("");
-    setBusinessName("");
-    setBusinessAddress("");
-    alert(
-      `${
-        userType === "vendor" ? "Vendor" : "Individual"
-      } account created successfully!`
-    );
 
-    if (userType === "vendor") {
-      navigation.navigate("TabNav");
-    } else {
-      navigation.navigate("TabNavigation");
+    try {
+      setLoading(true); // Set loading state to true
+      const response = await signup({ email, name, password, businessName, businessAddress });
+      
+      // Assuming the response contains a success field or status
+      if (response.status === 200) {
+        setName("");
+        setEmail("");
+        setPassword("");
+        setBusinessName("");
+        setBusinessAddress("");
+        alert(`${userType === "vendor" ? "Vendor" : "Individual"} account created successfully!`);
+        
+        if (userType === "vendor") {
+          navigation.navigate("TabNav");
+        } else {
+          navigation.navigate("TabNavigation");
+        }
+      }
+    } catch (error) {
+      console.error("Signup error", error);
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -88,12 +104,7 @@ const Signup = ({ route, navigation }) => {
         {userType === "vendor" && (
           <>
             <View style={styles.inputContainer}>
-              <Icon
-                name="store"
-                size={20}
-                color="#6753fc"
-                style={styles.icon}
-              />
+              <Icon name="store" size={20} color="#6753fc" style={styles.icon} />
               <TextInput
                 style={styles.input}
                 placeholder="Business Name"
@@ -102,12 +113,7 @@ const Signup = ({ route, navigation }) => {
               />
             </View>
             <View style={styles.inputContainer}>
-              <Icon
-                name="location-on"
-                size={20}
-                color="#6753fc"
-                style={styles.icon}
-              />
+              <Icon name="location-on" size={20} color="#6753fc" style={styles.icon} />
               <TextInput
                 style={styles.input}
                 placeholder="Business Address"
@@ -117,12 +123,15 @@ const Signup = ({ route, navigation }) => {
             </View>
           </>
         )}
+
         <TouchableOpacity
           style={styles.btn}
-          onPress={handleSubmit}
-          color="#6753fc"
+          onPress={handleSignup}
+          disabled={loading} // Disable the button while loading
         >
-          <Text style={styles.btnText}>Signup</Text>
+          <Text style={styles.btnText}>
+            {loading ? "Signing Up..." : "Signup"}
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity

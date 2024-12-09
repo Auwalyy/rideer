@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import { login } from '../Api'
 
 const { width } = Dimensions.get("window");
 
@@ -20,6 +21,17 @@ const Login = ({ navigation }) => {
     setModalVisible(false);
     navigation.navigate("Signup", { userType });
   };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } =  await login({email, password});
+      localStorage.setItem("token", data.token);
+      alert("Login successfull")
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <View style={styles.container}>

@@ -50,71 +50,73 @@ const signupOrg = async (req,res) => {
     }
 
 };
-
-const verifyEmail = async (req,res) => {
-    const { code } = req.body;
+const verifyEmail = async (req, res) => {
+	const { code } = req.body;
 	try {
-		const orgUser = await Individual.findOne({
-			verificationToken: code,
-			verificationTokenExpiresAt: { $gt: Date.now() },
-		});
+					const orgUser = await Organization.findOne({
+									verificationToken: code,
+									verificationTokenExpiresAt: { $gt: Date.now() },
+					});
 
-		if (!orgUser) {
-			return res.status(400).json({ success: false, message: "Invalid or expired verification code" });
-		}
+					if (!orgUser) {
+									return res.status(400).json({ success: false, message: "Invalid or expired verification code" });
+					}
 
-		orgUser.isVerified = true;
-		orgUser.verificationToken = undefined;
-		orgUser.verificationTokenExpiresAt = undefined;
-		await orgUser.save();
+					orgUser.isVerified = true;
+					orgUser.verificationToken = undefined;
+					orgUser.verificationTokenExpiresAt = undefined;
+					await orgUser.save();
 
-		await sendWelcomeEmail(orgUser.email, orgUser.name);
+					await sendWelcomeEmail(orgUser.email, orgUser.name);
 
-		res.status(200).json({
-			success: true,
-			message: "Email verified successfully",
-			user: {
-				...orgUser._doc,
-				password: undefined,
-			},
-		});
+					res.status(200).json({
+									success: true,
+									message: "Email verified successfully",
+									user: {
+													...orgUser._doc,
+													password: undefined,
+									},
+					});
 	} catch (error) {
-		console.log("error in verifyEmail ", error);
-		res.status(500).json({ success: false, message: "Server error" });
+					console.log("error in verifyEmail", error);
+					res.status(500).json({ success: false, message: "Server error" });
 	}
 };
+
 
 
 const loginOrg = async (req, res) => {
 	const { email, password } = req.body;
 	try {
-		const user = await orgUser.findOne({ email });
-		if (!user) {
-			return res.status(400).json({ success: false, message: "Invalid credentials" });
-		}
-		const isPasswordValid = await bcrypt.compare(password, user.password);
-		if (!isPasswordValid) {
-			return res.status(400).json({ success: false, message: "Invalid credentials" });
-		}
+					const user = await Organization.findOne({ email });
+					if (!user) {
+									return res.status(400).json({ success: false, message: "Invalid credentials" });
+					}
+					const isPasswordValid = await bcrypt.compare(password, user.password);
+					if (!isPasswordValid) {
+									return res.status(400).json({ success: false, message: "Invalid credentials" });
+					}
 
-		generateTokenAndSetCookie(res, orgUser._id);
+					// Assuming `generateTokenAndSetCookie` is a helper function you created for JWT token
+					generateTokenAndSetCookie(res, user._id);
 
-		user.lastLogin = new Date();
-		await user.save();
+					user.lastLogin = new Date();
+					await user.save();
 
-		res.status(200).json({
-			success: true,
-			message: "Logged in successfully",
-			user: {
-				...user._doc,
-				password: undefined,
-			},
-		});
+					res.status(200).json({
+									success: true,
+									message: "Logged in successfully",
+									user: {
+													...user._doc,
+													password: undefined,
+									},
+					});
 	} catch (error) {
-		console.log("Error in login ", error);
-		res.status(400).json({ success: false, message: error.message });
+					console.log("Error in login ", error);
+					res.status(400).json({ success: false, message: error.message });
 	}
 };
+
 
 const logout = async (req, res) => {
 	res.clearCookie("token");
@@ -148,7 +150,6 @@ module.exports = {
     signupOrg,
     verifyEmail,
     loginOrg,
-    logoutOrg,
     signupInd,
     loginInd,
     logoutInd
